@@ -1,2 +1,6 @@
 #!/bin/bash
+<<<<<<< HEAD
 /tmp_my_first_directory/: directory
+=======
+/tmp/my_first_directory: directory
+>>>>>>> cb6423cae919e635630810685aa031e3a6e83673
