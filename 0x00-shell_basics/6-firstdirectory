@@ -1,2 +1,2 @@
 #!/bin/bash
-export PATH=$PATH:/temp/my-first_directory
+export PATH=/temp/my-first_directory:$PATH
