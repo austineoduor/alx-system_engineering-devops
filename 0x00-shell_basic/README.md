@@ -1,1 +1,1 @@
-scrpting
+printing current workig dir
