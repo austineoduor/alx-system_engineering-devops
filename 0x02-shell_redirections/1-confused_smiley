@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 #!/bin/bash
 echo "\"
+=======
+#!/bin/bsh
+echo "\"(Ôo)'"
+>>>>>>> a72f1dbff29bef14241b08a30e8b16de306bcf06
