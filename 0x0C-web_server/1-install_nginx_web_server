@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# install nginx and configures port to listen on and querying return
+apt-get -y update
+apt-get -y install nginx
+echo "school" > /var/www/html/index.html
+service nginx restart
