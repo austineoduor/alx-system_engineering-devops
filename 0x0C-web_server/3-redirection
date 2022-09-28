@@ -4,6 +4,6 @@ sudo apt-get -y update
 sudo apt-get -y install nginx
 sudo ufw allow 'Nginx Full'
 echo "Hello World!" > /var/www/html/index.html
-sed -i '/listen 80 default_server;/a rewrite ^/redirect_me https://www.holbertonschool.com/ permanent;' /etc/nginx/sites-available/default
+sed -i '/^\tserver_name.*/a rewrite ^/redirect_me https://www.holbertonschool.com/ permanent;' /etc/nginx/sites-available/default
 sudo service nginx start
 sudo service nginx restart
