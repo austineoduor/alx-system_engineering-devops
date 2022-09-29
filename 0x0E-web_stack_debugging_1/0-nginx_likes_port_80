@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # Debugs error where sites-available/default is unlinked to site-enabled/default
-sudo service nginx stop
 sudo rm /etc/nginx/sites-enabled/default
-sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-sudo service nginx start
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+sudo service nginx restart
