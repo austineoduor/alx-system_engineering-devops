@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 #Nginx must be running, and listening on port 80
-cd /etc/nginx/sites-enabled/ || exit
-sudo rm default
+sudo apt-get -y update                                                             
+sudo apt-get -y install nginx                                                      
+sudo ufw allow 'Nginx Full'
 sudo ln -s /etc/nginx/sites-available/default default
 sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
 sudo service nginx restart
