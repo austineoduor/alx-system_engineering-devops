@@ -3,4 +3,5 @@
 cd /etc/nginx/sites-enabled/ || exit
 sudo rm default
 sudo ln -s /etc/nginx/sites-available/default default
+sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
 sudo service nginx restart
