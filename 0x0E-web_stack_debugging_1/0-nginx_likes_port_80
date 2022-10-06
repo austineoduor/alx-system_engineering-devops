@@ -2,5 +2,6 @@
 #Nginx must be running, and listening on port 80
 sudo apt-get -y update
 sudo apt-get -y install nginx
+sudo ufw allow 'Nginx Full'
 sudo sed -i 's/8080/80/g' /etc/nginx/site-enabled/default
 sudo service nginx restart
