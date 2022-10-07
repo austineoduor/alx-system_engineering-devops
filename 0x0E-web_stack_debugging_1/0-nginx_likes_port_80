@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Fixes the nginx listening port and reloads the nginx master process
-sudo apt-get install nginx
-sudo ufw allow 'Nginx HTTP'
-sed -i 's/listen 8080/listen 80/g' /etc/nginx/sites-enabled/default
-sed -i 's/listen \[::\]:8080/listen \[::\]:80/g' /etc/nginx/sites-enabled/default
-pgrep nginx -o > /run/nginx.pid
-nginx -s reload
-echo '' > /run/nginx.pid
+st="\tlisten 8080 default_server\;"
+newst="\tlisten 80 default_server\;"
+st2="\tlisten \[::\]:8080 default_server"
+newst2="\tlisten \[::\]:80 default_server ipv6only=on"
+sudo sed -i "0,/$st/{s/$st/$newst/}" /etc/nginx/sites-enabled/default
+sudo sed -i "0,/$st2/{s/$st2/$newst2/}" /etc/nginx/sites-enabled/default
+sudo service nginx start
