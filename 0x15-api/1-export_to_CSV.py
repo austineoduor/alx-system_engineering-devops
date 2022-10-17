@@ -1,30 +1,25 @@
 #!/usr/bin/python3
-"""
-uses REST API to gather data for employee to-do list
-and exports information in CSV format to new file
-"""
-if __name__ == "__main__":
-    import requests
-    from sys import argv
-    import csv
+""" a Python script that, using a REST API, for a given employee ID,
+    returns information about his/her TODO list progress."""
+import csv
+import requests
+import sys
 
-    user_URL = 'https://jsonplaceholder.typicode.com/users/{}'.format(argv[1])
-    employee = requests.get(user_URL).json()
-    employ_username = employee.get('username')
 
-    tasks_URL = 'https://jsonplaceholder.typicode.com/users/{}/todos'.format(
-        argv[1])
-    all_tasks = requests.get(tasks_URL).json()
-
-    filename = "{}.csv".format(argv[1])
-    with open(filename, 'w') as f:
-        f.write("")
-    for task in all_tasks:
-        with open(filename, 'a', newline='') as f:
-            csv_writer = csv.writer(f, quoting=csv.QUOTE_ALL)
-            values = []
-            values.append("{}".format(argv[1]))
-            values.append("{}".format(employ_username))
-            values.append("{}".format(task.get('completed')))
-            values.append("{}".format(task.get('title')))
-            csv_writer.writerow(values)
+if __name__ == '__main__':
+    url = 'https://jsonplaceholder.typicode.com/users/' + sys.argv[1]
+    r = requests.get(url)
+    if r.status_code == 200:
+        username = r.json().get("username")
+        url2 = 'https://jsonplaceholder.typicode.com/todos'
+        r2 = requests.get(url2)
+        filename = sys.argv[1] + '.csv'
+        with open(filename, 'w') as f:
+            wr = csv.writer(f, quoting=csv.QUOTE_ALL, delimiter=',')
+            for item in r2.json():
+                if item.get("userId") == int(sys.argv[1]):
+                    line = [item.get("userId"),
+                            username,
+                            str(item.get("completed")),
+                            item.get('title')]
+                    wr.writerow(line)

@@ -1,32 +1,29 @@
 #!/usr/bin/python3
-"""
-uses REST API to gather data for employee to-do list
-and exports information in CSV format to new file
-"""
-if __name__ == "__main__":
-    import requests
-    from sys import argv
-    import json
+""" a Python script that, using a REST API, for a given employee ID,
+    returns information about his/her TODO list progress."""
+import json
+import requests
+import sys
 
-    user_URL = 'https://jsonplaceholder.typicode.com/users'
-    all_employee = requests.get(user_URL).json()
 
-    todo_dict = {}
-    for employee in all_employee:
-        tURL = 'https://jsonplaceholder.typicode.com/users/{}/todos'.format(
-            employee.get('id'))
-        all_tasks = requests.get(tURL).json()
+if __name__ == '__main__':
+    data = {}
+    url2 = 'https://jsonplaceholder.typicode.com/todos'
+    r2 = requests.get(url2)
+    for item in r2.json():
+        if str(item.get('userId')) not in data:
+            data[str(item.get('userId'))] = []
+        url = 'https://jsonplaceholder.typicode.com/users?id='\
+              + str(item.get('userId'))
+        r = requests.get(url)
+        r = r.json()
+        username = r[0]['username']
+        d = {}
+        d['task'] = item.get('title')
+        d['completed'] = item.get('completed')
+        d['username'] = username
+        data[str(item.get('userId'))].append(d)
 
-        todo_tasks = []
-        for task in all_tasks:
-            task_dict = {}
-            task_dict["username"] = employee.get('username')
-            task_dict["task"] = task.get('title')
-            task_dict["completed"] = task.get('completed')
-            todo_tasks.append(task_dict)
-        todo_dict[employee.get('id')] = todo_tasks
-    json_string = json.dumps(todo_dict)
-
-    filename = "todo_all_employees.json"
+    filename = 'todo_all_employees.json'
     with open(filename, 'w') as f:
-        f.write(json_string)
+        json.dump(data, f)
