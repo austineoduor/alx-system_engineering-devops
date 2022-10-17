@@ -1,21 +1,26 @@
 #!/usr/bin/python3
-"""Getting data from API placeholder."""
+"""
+uses REST API to gather data for employee to-do list
+"""
+if __name__ == "__main__":
+    import requests
+    from sys import argv
 
-import requests
-import sys
+    user_URL = 'https://jsonplaceholder.typicode.com/users/{}'.format(argv[1])
+    employee = requests.get(user_URL).json()
+    employ_name = employee.get('name')
 
-if __name__ == '__main__':
-    """Gets API endpoint, then identify a user to display completed task info"""
-    endpoint = "https://jsonplaceholder.typicode.com/"
-    userId = sys.argv[1]
-    user = requests.get(endpoint + 'users/{}'.format(userId)).json()
-    todo = requests.get(endpoint + 'todos?userId={}'.format(userId)).json()
-    completed = []
+    tasks_URL = 'https://jsonplaceholder.typicode.com/users/{}/todos'.format(
+        argv[1])
+    done_tasks = []
+    all_tasks = requests.get(tasks_URL).json()
+    for task in all_tasks:
+        if task.get('completed') is True:
+            done_tasks.append(task.get('title'))
 
-    for task in todo:
-        if task.get("completed"):
-            completed.append(task.get("title"))
-    print("Employee {} is done with task({}/{}):"
-          .format(user.get('name'), len(completed), len(todo)))
-    for task in completed:
-        print('\t', task)
+    print("Employee {} is done with tasks({}/{}):".format(
+        employ_name, len(done_tasks), len(all_tasks)))
+
+    if len(done_tasks) > 0:
+        for task in done_tasks:
+            print("\t {}".format(task))
