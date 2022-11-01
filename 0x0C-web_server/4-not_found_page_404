@@ -2,7 +2,7 @@
 # Configure Nginx server to give error 404 page
 sudo apt-get update
 sudo apt-get -y install nginx
-sudo ufw allow 'Nginx HTTP'
+sudo ufw allow 'Nginx Full'
 sudo chmod -R 755 /var/www
 echo 'Hello World' > /var/www/html/index.html
 
@@ -22,7 +22,7 @@ new_config=\
         }
         
         if (\$request_filename ~ redirect_me){
-            rewrite ^ https://www.holbertonschool.com/watch?v=QH2-TGUlwu4 permanent;
+            rewrite ^ https://www.holbertonschool.com/ permanent;
         }
 }
 "
