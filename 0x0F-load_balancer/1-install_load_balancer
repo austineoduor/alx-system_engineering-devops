@@ -12,8 +12,8 @@ frontend http-in
 
 backend web_servers
 \tbalance roundrobin
-\tserver 22108-web-01 3.236.140.13:80 check
-\tserver 22108-web-02 3.238.133.193:80 check
+\tserver 22108-web-01 54.165.103.236:80 check
+\tserver 22108-web-02 54.205.232.233:80 check
 ' >> /etc/haproxy/haproxy.cfg
 echo -e '
 ENABLED=1' >> /etc/default/haproxy
